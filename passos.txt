@@ -1,0 +1,27 @@
+ShoppingList
+
+Configurando o GIT:
+git config --global user.name nicoly-athayde
+git config --global user.email nicolyathayde4@gmail.com
+
+Abrir o terminal:
+Ctrl + '
+
+Criar um projeto React Native com Expo:
+npx create-expo-app@latest ShoppingList --template blank
+
+cd ShoppingList
+
+Executar o projeto:
+npx expo start --localhost --android
+
+npx expo install react-dom react-native-web @expo/metro-runtime
+
+cd ShoppingList
+npm i
+
+Pacote expo router
+npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
+
+Rodar do 0
+npx expo start --clear
