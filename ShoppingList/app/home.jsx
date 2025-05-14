@@ -1,8 +1,26 @@
-import { ImageBackground, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, ImageBackground, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function Home() {
+  const [textInput, setTextInput] = useState('');
+  const [items, setItems] = useState([]);
+
+  const addItem = () => {
+    if (textInput == ''){
+      Alert.alert('Ocorreu um problema ;(', 'Por favor, informe o nome do produto!');
+    } else {
+      const newItem = {
+        id: Date.now().toString(),
+        name: textInput,
+        bought: false
+      }
+      setItems([...items, newItem]);
+      setTextInput('');
+      console.log(items)
+    }
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ImageBackground
@@ -15,21 +33,32 @@ export default function Home() {
           <Ionicons name="trash" size={32} color="#fff" />
         </View>
 
-        <View style={{ flex: 1 }}></View>
+        <FlatList
+          contentContainerStyle={{ padding: 20, paddingBottom: 100, color:'#fff'}}
+          data={items}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => 
+            <Text style={{color:"#fff"}}>{item.name}</Text>
+          }
+        />
+
 
         <View style={styles.footer}>
           <View style={styles.inputContainer}>
             <TextInput
               placeholder="Digite o nome do produto"
-              placeholderTextColor="#fff"
+              placeholderTextColor="#aeaeae"
               color="#fff"
               fontSize={18}
+              value={textInput}
+              onChangeText={(text) => setTextInput(text)}
             />
           </View>
-          <TouchableOpacity style={styles.iconContainer}>
+          <TouchableOpacity style={styles.iconContainer} onPress={addItem}>
             <Ionicons name="add" size={36} color="#fff" />
           </TouchableOpacity>
         </View>
+
       </ImageBackground>
     </SafeAreaView>
   );
