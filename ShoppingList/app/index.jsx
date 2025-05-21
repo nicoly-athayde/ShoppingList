@@ -13,10 +13,10 @@ export default function Welcome() {
       </View>
       <View style={styles.content}>
         <Text style={styles.title}>
-          Shopping List
+          Gallo Shopping List
         </Text>
         <Text style={styles.text}>
-          Monte sua lista de compras e não esqueça mais o que precisa comprar ao sair de casa!!
+          Monte sua lista de compras e não esqueça mais o que precisa comprar ao sair de casa!!!
         </Text>
         <Link style={styles.button} href={"/home"}>
           <Text style={styles.buttonText}>Acessar</Text>
