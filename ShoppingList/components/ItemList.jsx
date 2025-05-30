@@ -5,10 +5,10 @@ import { Ionicons } from '@expo/vector-icons'
 export default function ItemList({ item, markItem, unmarkItem, removeItem }) {
   return (
     <View style={styles.itemList}>
-      <Text style={item.bought ? styles.itemBought : styles.itemToBuy}>
-        {item.name}
+      <Text style={item?.bought ? styles.itemBought : styles.itemToBuy}>
+        {item?.name}
       </Text>
-      {!item.bought ? (
+      {!item?.bought ? (
         <TouchableOpacity style={styles.actionIcon} onPress={() => markItem(item.id)}>
           <Ionicons name='bag-check-outline' size={24} color='#fff' />
         </TouchableOpacity>
@@ -17,11 +17,11 @@ export default function ItemList({ item, markItem, unmarkItem, removeItem }) {
           <Ionicons name='bag-remove-outline' size={24} color='#fff' />
         </TouchableOpacity>
       )}
-      <TouchableOpacity 
-        style={[styles.actionIcon, { backgroundColor: 'darkred' }]}
+      <TouchableOpacity
+        style={[styles.actionIcon, { backgroundColor: "darkred"}]}
         onPress={() => removeItem(item.id)}
       >
-        <Ionicons name="trash-bin-outline" size={24} color='#fff' />
+        <Ionicons name='trash-bin-outline' size={24} color='#fff' />
       </TouchableOpacity>
     </View>
   )
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   actionIcon: {
     height: 40,
     width: 40,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 10,

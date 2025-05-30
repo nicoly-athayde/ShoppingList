@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, FlatList, ImageBackground, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import { Alert, FlatList, ImageBackground, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import ItemList from '../components/ItemList';
-import AsyncStorage from 'npm i @react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home() {
   const [textInput, setTextInput] = useState('');
@@ -17,103 +16,102 @@ export default function Home() {
     saveItemToDevice();
   }, [items]);
 
-
   const getItemsFromDevice = async () => {
     try {
-      const itemsMemory = await AsyncStorage.getItem('shoppinglist');
-      if (itemsMemory  != null) {
+      const itemsMemory = await AsyncStorage.getItem('ShoppingList');
+      if (itemsMemory != null) {
         setItems(JSON.parse(itemsMemory));
       }
     } catch (error) {
-    console.log(`Erro: ${error}`)
+      console.log(`Erro: ${error}`)
     }
   }
 
   const saveItemToDevice = async () => {
     try {
       const itemsJson = JSON.stringify(items);
-      await AsyncStorage.setItem('shoppinglist', itemsJson);
+      await AsyncStorage.setItem('ShoppingList', itemsJson);
     } catch (error) {
       console.log(`Erro: ${error}`)
+    }
   }
 
   const addItem = () => {
-    if (textInput.trim() === '') {
-      Alert.alert('Ocorreu um problema :(', 'Por favor, informe o nome do produto!');
+    if (textInput == '') {
+      Alert.alert(
+        'Ocorreu um problema :(',
+        'Por favor, informe o nome do produto!'
+      );
     } else {
       const newItem = {
         id: Date.now().toString(),
-        name: textInput.trim(),
+        name: textInput,
         bought: false
-      };
+      }
       setItems([...items, newItem]);
       setTextInput('');
     }
-  };
+  }
 
-  const markItemBought = (itemId) => {
+  const markItemBought = itemId => {
     const newItems = items.map((item) => {
-      if (item.id === itemId) {
-        return { ...item, bought: true };
+      if (item.id == itemId) {
+        return { ...item, bought: true}
       }
       return item;
     });
     setItems(newItems);
-  };
+  }
 
-  const unmarkItemBought = (itemId) => {
+  const unmarkItemBought = itemId => {
     const newItems = items.map((item) => {
-      if (item.id === itemId) {
-        return { ...item, bought: false }; 
+      if (item.id == itemId) {
+        return { ...item, bought: false}
       }
       return item;
     });
     setItems(newItems);
-  };
+  }
 
-  const removeItem = (itemId) => {
+  const removeItem = itemId => {
     Alert.alert(
-      'Excluir produto?',
-      'Confirma a exclusão deste produto?',
+      'Excluir Produto?', 'Confirma a exclusão deste Produto?',
       [
         {
-          text: 'Sim',
-          onPress: () => {
-            const newItems = items.filter((item) => item.id !== itemId);
-            setItems(newItems); 
+          text: 'Sim', onPress: () => {
+            const newItems = items.filter(item => item.id != itemId)
+            setItems(newItems);
           }
         },
         {
-          text: 'Cancelar',
-          style: 'cancel'
+          text: 'Cancelar', style: 'cancel'
         }
       ]
-    );
-  };
+    )
+  }
 
   const removeAll = () => {
     Alert.alert(
-      'Limpar lista?',
-      'Confirma a exclusão de todos os produtos?',
+      "Limpar Lista?", "Confirma a exclusão de todos os produtos?",
       [
         {
           text: 'Sim',
-          onPress: () => setItems([])
+          onPress: () => { setItems([]) }
         },
         {
           text: 'Cancelar',
           style: 'cancel'
         }
       ]
-    );
-  };
+    )
+  }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ImageBackground
+    <SafeAreaView style={{ flex: 1}}>
+      <ImageBackground 
         source={require('../assets/background.jpg')}
-        style={{ flex: 1, justifyContent: 'flex-start' }}
-        resizeMode="repeat"
+        style={{flex: 1, justifyContent: 'flex-start'}}
+        resizeMode='repeat'
       >
         <View style={styles.header}>
           <Text style={styles.title}>Lista de Produtos</Text>
@@ -121,17 +119,17 @@ export default function Home() {
         </View>
 
         <FlatList
-          contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
+          contentContainerStyle={{ padding: 20, paddingBottom: 100, color:'#fff'}}
           data={items}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
+          renderItem={({ item }) =>
             <ItemList
               item={item}
-              markItem={markItemBought}       // Corrigido aqui
+              markItem={markItemBought}
               unmarkItem={unmarkItemBought}
               removeItem={removeItem}
             />
-          )}
+          }
         />
 
         <View style={styles.footer}>
@@ -139,19 +137,20 @@ export default function Home() {
             <TextInput
               color="#fff"
               fontSize={18}
-              placeholder="Digite o nome do produto..."
-              placeholderTextColor="#aeaeae"
+              placeholder='Digite o nome do produto...'
+              placeholderTextColor='#aeaeae'
               value={textInput}
               onChangeText={(text) => setTextInput(text)}
             />
           </View>
           <TouchableOpacity style={styles.iconContainer} onPress={addItem}>
-            <Ionicons name="add" size={36} color="#fff" />
+            <Ionicons name='add' size={36} color='#fff' />
           </TouchableOpacity>
         </View>
+
       </ImageBackground>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -163,7 +162,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#000000c0',
     borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30
+    borderBottomRightRadius: 30,
   },
   title: {
     fontSize: 26,
@@ -179,17 +178,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: '#000000c0',
     borderTopLeftRadius: 30,
-    borderTopRightRadius: 30
+    borderTopRightRadius: 30,
   },
   inputContainer: {
-    backgroundColor: '#000',
+    backgroundColor: "#000",
     elevation: 40,
     flex: 1,
     height: 50,
     marginVertical: 20,
     borderRadius: 30,
     paddingHorizontal: 20,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   iconContainer: {
     height: 50,
@@ -200,4 +199,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   }
-})}
+})
